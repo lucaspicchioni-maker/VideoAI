@@ -1,0 +1,66 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Channel {
+  id        String   @id @default(cuid())
+  name      String
+  niche     String
+  platform  String
+  brandName String?
+  avatarUrl String?
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  contents  Content[]
+}
+
+model Trend {
+  id          String   @id @default(cuid())
+  title       String
+  platform    String
+  niche       String
+  views       Int      @default(0)
+  engagement  Float    @default(0)
+  sourceUrl   String?
+  metadata    Json?
+  detectedAt  DateTime @default(now())
+  contents    Content[]
+}
+
+model Content {
+  id          String   @id @default(cuid())
+  title       String
+  niche       String
+  status      String   @default("idea")
+  script      String?
+  videoUrl    String?
+  thumbnailUrl String?
+  channel     Channel  @relation(fields: [channelId], references: [id])
+  channelId   String
+  trend       Trend?   @relation(fields: [trendId], references: [id])
+  trendId     String?
+  publishedAt DateTime?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  analytics   Analytics?
+}
+
+model Analytics {
+  id          String   @id @default(cuid())
+  content     Content  @relation(fields: [contentId], references: [id])
+  contentId   String   @unique
+  views       Int      @default(0)
+  likes       Int      @default(0)
+  comments    Int      @default(0)
+  shares      Int      @default(0)
+  retention   Float    @default(0)
+  ctr         Float    @default(0)
+  revenue     Float    @default(0)
+  fetchedAt   DateTime @default(now())
+}
