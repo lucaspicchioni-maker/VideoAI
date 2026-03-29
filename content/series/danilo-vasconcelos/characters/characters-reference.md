@@ -10,7 +10,17 @@ Always use `--cref [URL] --cw 100` in every prompt featuring that character.
 ## DANILO VASCONCELOS (Protagonista)
 **Inspired by:** Daniel Vorcaro
 
-**Reference Image:** https://cdn.midjourney.com/80110a08-e749-4e07-9e1a-0623f23107cc/0_1.png
+**Character Sheet — todas as refs aprovadas:**
+- Original: https://cdn.midjourney.com/80110a08-e749-4e07-9e1a-0623f23107cc/0_1.png
+- Frontal neutro: https://cdn.midjourney.com/317559db-28aa-489f-966f-8c89185c97a2/0_2.png
+- 3/4 perfil: https://cdn.midjourney.com/c35b5e8a-0fe6-4e9c-a114-3fea87d2ffb3/0_2.png
+- Corpo inteiro: https://cdn.midjourney.com/b3c5dea3-e9a5-4fba-8282-b2fe3032213c/0_2.png
+- Close dramatico: https://cdn.midjourney.com/5a44be56-6f3c-4b8a-8d1e-543bc79442eb/0_3.png
+
+**Multi-cref definitivo — copiar em TODAS as cenas com Danilo:**
+```
+--cref https://cdn.midjourney.com/80110a08-e749-4e07-9e1a-0623f23107cc/0_1.png https://cdn.midjourney.com/317559db-28aa-489f-966f-8c89185c97a2/0_2.png https://cdn.midjourney.com/c35b5e8a-0fe6-4e9c-a114-3fea87d2ffb3/0_2.png https://cdn.midjourney.com/5a44be56-6f3c-4b8a-8d1e-543bc79442eb/0_3.png
+```
 
 **Fixed Description:**
 > Brazilian male, 42 years old, strong angular jaw, dark brown hair slicked back with subtle gel, light brown piercing confident eyes, a permanent slight smile that never disappears even in tense moments, medium athletic build, perfectly tailored charcoal Italian suit, crisp white shirt, precisely folded pocket square, gold watch on left wrist, effortless commanding posture, slight tan
