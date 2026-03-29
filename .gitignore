@@ -6,3 +6,6 @@ node_modules/
 *.log
 dist/
 .DS_Store
+
+# External tools (cloned repos - don't commit)
+tools/external/

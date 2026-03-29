@@ -1,0 +1,19 @@
+# DANILO VASCONCELOS — Character Reference
+
+## Status: PENDENTE
+
+Colar aqui a URL do Midjourney aprovada para usar como --cref em todos os episodios.
+
+## Prompt base para gerar:
+Brazilian male, 42 years old, strong angular jaw, dark brown hair slicked back with subtle gel, light brown piercing confident eyes, a permanent slight smile that never disappears even in tense moments, medium athletic build, perfectly tailored charcoal Italian suit, crisp white shirt, precisely folded pocket square, gold watch on left wrist, effortless commanding posture, slight tan, photorealistic, dramatic cinematic lighting --ar 9:16 --style raw --hd
+
+## URL aprovada:
+https://cdn.midjourney.com/80110a08-e749-4e07-9e1a-0623f23107cc/0_1.png
+
+## Instrucoes:
+1. Gere a imagem no Midjourney com o prompt acima
+2. Escolha a melhor das 4 opcoes
+3. Upscale (U1-U4)
+4. Copie a URL da imagem upscalada
+5. Cole acima no lugar de [COLAR URL AQUI]
+6. Use --cref [URL] --cw 80 em todas as cenas com o Danilo

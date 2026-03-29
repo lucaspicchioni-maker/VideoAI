@@ -49,3 +49,39 @@ npx prisma studio # Visualizar banco
 
 ## Repo
 https://github.com/lucaspicchioni-maker/VideoAI
+
+---
+
+## ESTADO ATUAL DO PROJETO (2026-03-28)
+
+### Primeira producao em andamento
+A plataforma ainda esta em esqueleto (sem paginas, sem APIs implementadas). O foco atual e na PRODUCAO DE CONTEUDO — serie "Danilo Vasconcelos — O Anti-Heroi".
+
+**Ver estado completo em:** `context/project-state.md`
+
+### Serie Danilo Vasconcelos
+- 120 episodios / 3 temporadas / formato vertical 9:16
+- EP01 "O Sorriso" em producao — fase de geracao de imagens Midjourney
+- Biblia completa em: `content/series/danilo-vasconcelos/bible/BIBLE-v2.md`
+- Prompts prontos em: `content/ep01-prompts-midjourney.md`
+
+### Pipeline de producao atual
+```
+Midjourney V7 → Kling AI → ElevenLabs → CapCut Desktop → Publicacao 19h
+```
+
+### Personagem principal aprovado
+- Danilo Vasconcelos (protagonista)
+- URL de referencia MJ: `https://cdn.midjourney.com/80110a08-e749-4e07-9e1a-0623f23107cc/0_1.png`
+- Usar `--cref [URL]` em todas as cenas com o personagem
+- MJ V7 NAO suporta `--cw` nem `--hd`
+
+### Ferramentas externas clonadas (nao commitadas)
+10 repos em `tools/external/` para estudo e integracao futura:
+ShortGPT, ViMax, carocut, Director, MovieAgent, VideoAgent, montage-ai, MM_StoryAgent, video-avatars-agent, autoclip
+
+### Decisoes importantes
+- Comunicacao com Claude em portugues (BR)
+- Codigo e commits em ingles
+- `tools/external/` no .gitignore — nao commitar repos externos
+- Disclaimer obrigatorio em todos os videos: "Esta e uma obra de ficcao."
