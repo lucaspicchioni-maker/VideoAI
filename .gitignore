@@ -9,3 +9,9 @@ dist/
 
 # External tools (cloned repos - don't commit)
 tools/external/
+
+# Claude Code local memory
+.claude/
+
+# Prisma backup
+*.bak

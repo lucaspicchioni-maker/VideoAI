@@ -1,0 +1,129 @@
+version: "3.9"
+
+services:
+  # ──────────────────────────────────────────
+  # PostgreSQL
+  # ──────────────────────────────────────────
+  postgres:
+    image: postgres:16-alpine
+    container_name: videoai-postgres
+    environment:
+      POSTGRES_USER: videoai
+      POSTGRES_PASSWORD: videoai_dev
+      POSTGRES_DB: videoai
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./migrations:/docker-entrypoint-initdb.d  # runs SQL on first start
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U videoai"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # ──────────────────────────────────────────
+  # Redis
+  # ──────────────────────────────────────────
+  redis:
+    image: redis:7-alpine
+    container_name: videoai-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  # ──────────────────────────────────────────
+  # pgAdmin (optional — remove in production)
+  # ──────────────────────────────────────────
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: videoai-pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@videoai.dev
+      PGADMIN_DEFAULT_PASSWORD: admin
+    ports:
+      - "5050:80"
+    depends_on:
+      - postgres
+    profiles:
+      - tools  # only starts with: docker compose --profile tools up
+
+  # ──────────────────────────────────────────
+  # FastAPI Backend
+  # ──────────────────────────────────────────
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: videoai-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./backend:/app
+      - media_storage:/app/storage
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://videoai:videoai_dev@postgres:5432/videoai
+      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────
+  # Celery Worker (AI jobs queue)
+  # ──────────────────────────────────────────
+  worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: videoai-worker
+    command: celery -A app.worker worker --loglevel=info --concurrency=2
+    volumes:
+      - ./backend:/app
+      - media_storage:/app/storage
+    environment:
+      - DATABASE_URL=postgresql+asyncpg://videoai:videoai_dev@postgres:5432/videoai
+      - REDIS_URL=redis://redis:6379/0
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    restart: unless-stopped
+
+  # ──────────────────────────────────────────
+  # Next.js Frontend
+  # ──────────────────────────────────────────
+  frontend:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+    container_name: videoai-frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    env_file:
+      - ./app/.env.local
+    depends_on:
+      - backend
+    restart: unless-stopped
+    profiles:
+      - production  # in dev, run Next.js with npm run dev directly
+
+volumes:
+  postgres_data:
+  redis_data:
+  media_storage:
